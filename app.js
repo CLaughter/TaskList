@@ -88,21 +88,3 @@ function clearClick(e) {
 //   console.log("delete item");
 //   console.log(e.target);
 // }
-
-// function print(variable) {
-//   let c = 3;
-
-//   return function func(variable2) {
-//     console.log(variable);
-//     console.log(variable2);
-//     console.log(c);
-//   };
-// }
-// let a = print(1);
-// a(2);
-
-let a = {
-  a: 10,
-  b: [1, 2],
-};
-console.table(a);
