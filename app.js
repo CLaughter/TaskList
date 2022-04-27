@@ -13,6 +13,7 @@ const taskInput = document.getElementById("task-input");
 const taskAddedBtn = document.querySelector("span");
 const li = document.createElement("li");
 const deleteX = document.createElement("span");
+const delX = "&times;";
 deleteX.className = "closeBtn";
 li.className = "task";
 
@@ -30,8 +31,14 @@ function runEvent(e) {
   li.appendChild(document.createTextNode(`${taskInput.value}`));
   document.querySelector("ul.taskList").appendChild(li);
 
-  // li.append(deleteX) (<button class="close-button"></button>);
-  li.appendChild(deleteX).innerHTML = "&times;";
+  // place x in li when generated for deletion of specific task element
+  li.appendChild(deleteX).innerHTML = delX;
+
+  // remove item when clicked
+  deleteX.addEventListener("click", () => {
+    li.remove();
+    console.log("Gonzo");
+  });
 
   console.log(`EVENT TYPE: ${e.type}`);
   //grab the input field text
@@ -52,11 +59,6 @@ function runEvent(e) {
   for (let i = 0; i < liEven.length; i++) {
     liEven[i].style.background = "#f4f4f4";
   }
-
-  // remove item when clicked
-  li.addEventListener("click", () => {
-    li.remove();
-  });
 }
 
 // Add event listener to change Clear All button text when clicked
@@ -74,3 +76,13 @@ function clearClick(e) {
   // }
   console.log(clearAll);
 }
+
+// runEvent();
+
+// use this format for li delete x
+// const delItem = document.querySelector("li");
+// delItem.addEventListener("click", deleteItem);
+// function deleteItem(e) {
+//   console.log("delete item");
+//   console.log(e.target);
+// }

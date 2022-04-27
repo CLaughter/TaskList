@@ -120,6 +120,8 @@ input:hover {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  padding-left: 4em;
+  color: rgb(174, 40, 40);
 }
 
 .btn.btn-clear {
