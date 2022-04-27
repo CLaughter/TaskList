@@ -2,44 +2,36 @@
 document.getElementById("top-header").style.color = "maroon";
 document.getElementById("bottom-header").style.color = "#b73c21";
 
-// Change task wording
-const items = document.querySelectorAll("ul.taskList li.task");
-
-items.forEach(function (item, index) {
-  item.textContent = `${index}: Hello`;
-});
-console.log(items);
-
-// Change task item4 text
-const lis = document.getElementsByTagName("li");
-lis[3].textContent = "DoDat";
+// Input current date at bottom of card
+const date = new Date();
+const dateSpan = document.createElement("span");
+document.body.append(date);
 
 // add event listener to Enter Task input field when Add Task button clicked
 const form = document.querySelector("form");
 const taskInput = document.getElementById("task-input");
-const taskAdded = document.querySelector("span");
+const taskAddedBtn = document.querySelector("span");
+const li = document.createElement("li");
+const deleteX = document.createElement("span");
+deleteX.className = "closeBtn";
+li.className = "task";
 
 form.addEventListener("submit", runEvent);
 function runEvent(e) {
-  // add span button when Add Task button clicked after input entered
+  // add span with button when Add Task button clicked after input entered
   let taskInputTxt = document.querySelector("task-input");
   if (`${(taskInputTxt = !"")}`) {
-    taskAdded.className = "btn";
-    taskAdded.innerText = "Task Added";
+    taskAddedBtn.className = "btn taskAdded";
+    // taskAdded.classList.add("taskAdded");
+    taskAddedBtn.innerText = "Task Added";
   }
 
-  // // Remove Task Added button when input text area clicked
-  // taskInputTxt.addEventListener("click", hide);
-  // setInterval(function () {
-  //   taskAdded.hidden;
-  //   e.preventDefault();
-  // }, 1000);
-
   // Adding a new task element
-  const li = document.createElement("li");
-  li.className = "task";
   li.appendChild(document.createTextNode(`${taskInput.value}`));
-  revList = document.querySelector("ul.taskList").appendChild(li);
+  document.querySelector("ul.taskList").appendChild(li);
+
+  // li.append(deleteX) (<button class="close-button"></button>);
+  li.appendChild(deleteX).innerHTML = "&times;";
 
   console.log(`EVENT TYPE: ${e.type}`);
   //grab the input field text
@@ -47,44 +39,38 @@ function runEvent(e) {
   //clear the text field
   taskInput.value = "";
   e.preventDefault();
-}
 
-// Alternating background colors of tasks using 2 different loops
-const liOdd = document.querySelectorAll("li:nth-child(odd)");
-const liEven = document.querySelectorAll("li:nth-child(even)");
+  // Alternating background colors of tasks using 2 different loops
+  const liOdd = document.querySelectorAll("li:nth-child(odd)");
+  const liEven = document.querySelectorAll("li:nth-child(even)");
 
-liOdd.forEach(function (li, index) {
-  li.style.background = "#ccc";
-});
+  // 2 different loop types to do the same thing
+  liOdd.forEach(function (li) {
+    li.style.background = "#ccc";
+  });
 
-for (let i = 0; i < liEven.length; i++) {
-  liEven[i].style.background = "#f4f4f4";
+  for (let i = 0; i < liEven.length; i++) {
+    liEven[i].style.background = "#f4f4f4";
+  }
+
+  // remove item when clicked
+  li.addEventListener("click", () => {
+    li.remove();
+  });
 }
 
 // Add event listener to change Clear All button text when clicked
 // for loop to remove iterations of task list
 const clearAll = document.querySelector("ul.taskList li.task");
+
 document.querySelector(".btn-clear").addEventListener("click", clearClick);
 function clearClick(e) {
-  let val;
-  val = e;
   e.target.innerText = "Done";
-  // clear the task list
-  for (let i = 0; i < lis.length; i++) {
-    lis[i].remove();
-  }
-  for (let i = 0; i < lis.length; i++) {
-    lis[i].remove();
-  }
-  for (let i = 0; i < lis.length; i++) {
-    lis[i].remove();
-  }
-}
+  confirm("Are You Sure?");
 
-// use this format for li delete x
-// const delItem = document.querySelector("li");
-// delItem.addEventListener("click", deleteItem);
-// function deleteItem(e) {
-//   console.log("delete item");
-//   console.log(e.target);
-// }
+  // clear the task list
+  // for (let i = 0; i < clearAll.length; i++) {
+  //   lis[i].remove();
+  // }
+  console.log(clearAll);
+}

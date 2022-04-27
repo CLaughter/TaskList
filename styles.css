@@ -105,9 +105,21 @@ input:hover {
 }
 
 .task {
-  justify-content: left;
+  justify-content: space-between;
   padding: .25em;
   font-size: 1.5rem;
+  
+}
+
+/* When task added with JS */
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
 }
 
 .btn.btn-clear {
