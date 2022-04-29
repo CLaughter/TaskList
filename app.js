@@ -8,13 +8,16 @@ const dateSpan = document.createElement("span");
 document.body.append(date);
 
 // add event listener to Enter Task input field when Add Task button clicked
-const form = document.querySelector("form");
+const form = document.querySelector("#task-form");
 const taskInput = document.getElementById("task-input");
 const taskAddedBtn = document.querySelector("span");
 const li = document.createElement("li");
+li.style.display = "flex";
+li.style.justifyContent = "space-between";
 const deleteX = document.createElement("span");
+deleteX.style.cursor = "pointer";
 const delX = "&times;";
-deleteX.className = "closeBtn";
+delX.className = "closeBtn";
 li.className = "task";
 
 form.addEventListener("submit", runEvent);
@@ -23,26 +26,26 @@ function runEvent(e) {
   let taskInputTxt = document.querySelector("task-input");
   if (`${(taskInputTxt = !"")}`) {
     taskAddedBtn.className = "btn taskAdded";
-    // taskAdded.classList.add("taskAdded");
     taskAddedBtn.innerText = "Task Added";
   }
+
+  form.addEventListener("click", () => {
+    taskAddedBtn.remove();
+  });
 
   // Adding a new task element
   li.appendChild(document.createTextNode(`${taskInput.value}`));
   document.querySelector("ul.taskList").appendChild(li);
+  console.log(li);
 
   // place x in li when generated for deletion of specific task element
   li.appendChild(deleteX).innerHTML = delX;
 
-  // remove item when clicked
+  // remove item when X clicked
   deleteX.addEventListener("click", () => {
     li.remove();
-    console.log("Gonzo");
   });
 
-  console.log(`EVENT TYPE: ${e.type}`);
-  //grab the input field text
-  console.log(taskInput.value);
   //clear the text field
   taskInput.value = "";
   e.preventDefault();
@@ -76,13 +79,3 @@ function clearClick(e) {
   // }
   console.log(clearAll);
 }
-
-// runEvent();
-
-// use this format for li delete x
-// const delItem = document.querySelector("li");
-// delItem.addEventListener("click", deleteItem);
-// function deleteItem(e) {
-//   console.log("delete item");
-//   console.log(e.target);
-// }
