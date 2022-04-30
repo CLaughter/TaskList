@@ -10,10 +10,10 @@ document.body.append(date);
 // add event listener to Enter Task input field when Add Task button clicked
 const form = document.querySelector("#task-form");
 const taskInput = document.getElementById("task-input");
-const taskAddedBtn = document.querySelector("span");
 const li = document.createElement("li");
 li.style.display = "flex";
 li.style.justifyContent = "space-between";
+const taskAddedBtn = document.querySelector("span");
 const deleteX = document.createElement("span");
 deleteX.style.cursor = "pointer";
 const delX = "&times;";
@@ -23,10 +23,14 @@ li.className = "task";
 form.addEventListener("submit", runEvent);
 function runEvent(e) {
   // add span with button when Add Task button clicked after input entered
-  let taskInputTxt = document.querySelector("task-input");
+  let taskInputTxt = document.querySelector("taskInput");
   if (`${(taskInputTxt = !"")}`) {
     taskAddedBtn.className = "btn taskAdded";
     taskAddedBtn.innerText = "Task Added";
+
+    setTimeout(() => {
+      taskAddedBtn.remove();
+    }, 3000);
   }
 
   form.addEventListener("click", () => {
@@ -41,10 +45,14 @@ function runEvent(e) {
   // place x in li when generated for deletion of specific task element
   li.appendChild(deleteX).innerHTML = delX;
 
-  // remove item when X clicked
+  // remove item when clicked
   deleteX.addEventListener("click", () => {
     li.remove();
   });
+
+  // console.log(`EVENT TYPE: ${e.type}`);
+  // //grab the input field text
+  // console.log(taskInput.value);
 
   //clear the text field
   taskInput.value = "";
