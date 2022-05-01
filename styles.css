@@ -111,19 +111,6 @@ input:hover {
   
 }
 
-/* When task added with JS */
-.closeBtn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  padding-left: 4em;
-  color: rgb(174, 40, 40);
-}
-
 .btn.btn-clear {
   background-color: hsl(200, 100%, 0%);
   border-color: 1px solid hsl(0, 0%, 50%);

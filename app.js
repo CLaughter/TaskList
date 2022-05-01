@@ -7,28 +7,20 @@ const date = new Date();
 const dateSpan = document.createElement("span");
 document.body.append(date);
 
-// add event listener to Enter Task input field when Add Task button clicked
+// Define UI variables
 const form = document.querySelector("#task-form");
 const taskInput = document.querySelector("#task-input");
 const taskList = document.querySelector(".taskList");
-const li = document.createElement("li");
-li.style.display = "flex";
-li.style.justifyContent = "space-between";
-li.dataset.id = "data-list-item-text";
 const taskAddedBtn = document.querySelector("span");
-const deleteX = document.createElement("span");
-deleteX.style.cursor = "pointer";
-const delX = "&times;";
-delX.className = "closeBtn";
-li.className = "task";
-const clearAllBtn = document.querySelector(".btn-clear");
-const btnClone = clearAllBtn.cloneNode();
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+// Load all event listeners
+loadEventListeners();
+function loadEventListeners() {
+  form.addEventListener("submit", addTask);
+}
 
-  // add span with button when Add Task button clicked after input entered
-  let taskInputTxt = taskInput.value;
+// Add task
+function addTask(e) {
   if (`${(taskInputTxt = !"")}`) {
     taskAddedBtn.className = "btn taskAdded";
     taskAddedBtn.innerText = "Task Added";
@@ -37,19 +29,25 @@ form.addEventListener("submit", (e) => {
       taskAddedBtn.remove();
     }, 2000);
   }
+  const li = document.createElement("li");
+  li.className = "taskList-item";
+  li.style.display = "flex";
+  li.style.justifyContent = "space-between";
 
-  // Adding a new task element
-  li.appendChild(document.createTextNode(`${taskInput.value}`));
+  li.appendChild(document.createTextNode(taskInput.value));
   taskList.appendChild(li);
   // place x in li when generated for deletion of specific task element
+  const deleteX = document.createElement("span");
+  const delX = "&times;";
   li.appendChild(deleteX).innerHTML = delX;
+  deleteX.style.cursor = "pointer";
+  deleteX.style.color = "rgb(174, 40, 40)";
 
   // remove item when clicked
   deleteX.addEventListener("click", () => {
     li.remove();
   });
 
-  //clear the text field
   taskInput.value = "";
 
   // Alternating background colors of tasks using 2 different loops
@@ -64,14 +62,17 @@ form.addEventListener("submit", (e) => {
   for (let i = 0; i < liEven.length; i++) {
     liEven[i].style.background = "#ccc";
   }
-});
+  e.preventDefault();
+}
 
 // Add event listener to change Clear All button text when clicked
 // for loop to remove iterations of task list
 document.querySelector(".btn-clear").addEventListener("click", (e) => {
   confirm("Are You Sure?");
 
-  const clearAll = document.querySelector("li.task");
+  const clearAll = document.querySelector(".taskList");
+  const clearAllBtn = document.querySelector(".btn-clear");
+  const btnClone = clearAllBtn.cloneNode();
   // clear the task list
   clearAll.remove();
   e.target.innerText = "Done";
