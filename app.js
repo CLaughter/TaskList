@@ -12,11 +12,13 @@ const form = document.querySelector("#task-form");
 const taskInput = document.querySelector("#task-input");
 const taskList = document.querySelector(".taskList");
 const taskAddedBtn = document.querySelector("span");
+const deleteList = document.querySelector(".btn-clear");
 
 // Load all event listeners
 loadEventListeners();
 function loadEventListeners() {
   form.addEventListener("submit", addTask);
+  deleteList.addEventListener("click", dumpAll);
 }
 
 // Add task
@@ -66,8 +68,7 @@ function addTask(e) {
 }
 
 // Add event listener to change Clear All button text when clicked
-// for loop to remove iterations of task list
-document.querySelector(".btn-clear").addEventListener("click", (e) => {
+function dumpAll(e) {
   confirm("Are You Sure?");
 
   const clearAll = document.querySelector(".taskList");
@@ -82,4 +83,4 @@ document.querySelector(".btn-clear").addEventListener("click", (e) => {
     clearAllBtn.replaceWith(btnClone);
     btnClone.innerHTML = "Clear All";
   }, 2000);
-});
+}
