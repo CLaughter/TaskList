@@ -9,39 +9,38 @@ document.body.append(date);
 
 // add event listener to Enter Task input field when Add Task button clicked
 const form = document.querySelector("#task-form");
-const taskInput = document.getElementById("task-input");
+const taskInput = document.querySelector("#task-input");
+const taskList = document.querySelector(".taskList");
 const li = document.createElement("li");
 li.style.display = "flex";
 li.style.justifyContent = "space-between";
+li.dataset.id = "data-list-item-text";
 const taskAddedBtn = document.querySelector("span");
 const deleteX = document.createElement("span");
 deleteX.style.cursor = "pointer";
 const delX = "&times;";
 delX.className = "closeBtn";
 li.className = "task";
+const clearAllBtn = document.querySelector(".btn-clear");
+const btnClone = clearAllBtn.cloneNode();
 
-form.addEventListener("submit", runEvent);
-function runEvent(e) {
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
   // add span with button when Add Task button clicked after input entered
-  let taskInputTxt = document.querySelector("taskInput");
+  let taskInputTxt = taskInput.value;
   if (`${(taskInputTxt = !"")}`) {
     taskAddedBtn.className = "btn taskAdded";
     taskAddedBtn.innerText = "Task Added";
 
     setTimeout(() => {
       taskAddedBtn.remove();
-    }, 3000);
+    }, 2000);
   }
-
-  form.addEventListener("click", () => {
-    taskAddedBtn.remove();
-  });
 
   // Adding a new task element
   li.appendChild(document.createTextNode(`${taskInput.value}`));
-  document.querySelector("ul.taskList").appendChild(li);
-  console.log(li);
-
+  taskList.appendChild(li);
   // place x in li when generated for deletion of specific task element
   li.appendChild(deleteX).innerHTML = delX;
 
@@ -50,13 +49,8 @@ function runEvent(e) {
     li.remove();
   });
 
-  // console.log(`EVENT TYPE: ${e.type}`);
-  // //grab the input field text
-  // console.log(taskInput.value);
-
   //clear the text field
   taskInput.value = "";
-  e.preventDefault();
 
   // Alternating background colors of tasks using 2 different loops
   const liOdd = document.querySelectorAll("li:nth-child(odd)");
@@ -64,26 +58,27 @@ function runEvent(e) {
 
   // 2 different loop types to do the same thing
   liOdd.forEach(function (li) {
-    li.style.background = "#ccc";
+    li.style.background = "#f4f4f4f4";
   });
 
   for (let i = 0; i < liEven.length; i++) {
-    liEven[i].style.background = "#f4f4f4";
+    liEven[i].style.background = "#ccc";
   }
-}
+});
 
 // Add event listener to change Clear All button text when clicked
 // for loop to remove iterations of task list
-const clearAll = document.querySelector("ul.taskList li.task");
-
-document.querySelector(".btn-clear").addEventListener("click", clearClick);
-function clearClick(e) {
-  e.target.innerText = "Done";
+document.querySelector(".btn-clear").addEventListener("click", (e) => {
   confirm("Are You Sure?");
 
+  const clearAll = document.querySelector("li.task");
   // clear the task list
-  // for (let i = 0; i < clearAll.length; i++) {
-  //   lis[i].remove();
-  // }
-  console.log(clearAll);
-}
+  clearAll.remove();
+  e.target.innerText = "Done";
+
+  setTimeout(() => {
+    // convert clearAllBtn to original state
+    clearAllBtn.replaceWith(btnClone);
+    btnClone.innerHTML = "Clear All";
+  }, 2000);
+});
