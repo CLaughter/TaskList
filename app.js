@@ -1,15 +1,15 @@
 // Change header text colors
-document.getElementById("top-header").style.color = "maroon";
-document.getElementById("bottom-header").style.color = "#b73c21";
+document.getElementById("top-header").style.color = "#a0522d";
+document.getElementById("bottom-header").style.color = "#a0522d";
 
 // Input current date at bottom of card
 const date = new Date();
-const dateSpan = document.createElement("span");
 document.body.append(date);
 
 // Define UI variables
 const form = document.querySelector("#task-form");
 const taskInput = document.querySelector("#task-input");
+const addTaskBtn = document.querySelector(".btn-add");
 const taskList = document.querySelector(".taskList");
 const taskAddedBtn = document.querySelector("span");
 const deleteList = document.querySelector(".btn-clear");
@@ -18,37 +18,30 @@ const deleteList = document.querySelector(".btn-clear");
 loadEventListeners();
 function loadEventListeners() {
   form.addEventListener("submit", addTask);
+  addTaskBtn.addEventListener("click", addedBtn);
+  taskList.addEventListener("click", removeTask);
   deleteList.addEventListener("click", dumpAll);
 }
 
-// Add task
+// Add task, style and append li with delete btn span
 function addTask(e) {
-  if (`${(taskInputTxt = !"")}`) {
-    taskAddedBtn.className = "btn taskAdded";
-    taskAddedBtn.innerText = "Task Added";
-
-    setTimeout(() => {
-      taskAddedBtn.remove();
-    }, 2000);
-  }
   const li = document.createElement("li");
   li.className = "taskList-item";
   li.style.display = "flex";
   li.style.justifyContent = "space-between";
-
+  li.style.padding = "0 3px";
   li.appendChild(document.createTextNode(taskInput.value));
-  taskList.appendChild(li);
-  // place x in li when generated for deletion of specific task element
+
+  // Style and place x in li when generated to deletion
   const deleteX = document.createElement("span");
   const delX = "&times;";
-  li.appendChild(deleteX).innerHTML = delX;
+  deleteX.className = "spanX";
   deleteX.style.cursor = "pointer";
-  deleteX.style.color = "rgb(174, 40, 40)";
+  deleteX.style.color = "#b22222";
+  deleteX.style.fontWeight = "bold";
+  li.appendChild(deleteX).innerHTML = delX;
 
-  // remove item when clicked
-  deleteX.addEventListener("click", () => {
-    li.remove();
-  });
+  taskList.appendChild(li);
 
   taskInput.value = "";
 
@@ -67,7 +60,27 @@ function addTask(e) {
   e.preventDefault();
 }
 
-// Add event listener to change Clear All button text when clicked
+// Add Task Added button and hide after 2 seconds
+function addedBtn() {
+  if (`${(taskInputTxt = !"")}`) {
+    const addBtnDiv = document.querySelector(".addBtn");
+    taskAddedBtn.className = "btn taskAdded";
+    taskAddedBtn.innerText = "Task Added";
+    addBtnDiv.appendChild(taskAddedBtn);
+
+    setTimeout(() => {
+      taskAddedBtn.remove();
+    }, 2000);
+  }
+}
+
+function removeTask(e) {
+  if (e.target.classList.contains("spanX")) {
+    e.target.parentElement.remove();
+  }
+}
+
+// Change Clear All button text when clicked and revert to previous state
 function dumpAll(e) {
   confirm("Are You Sure?");
 
@@ -79,7 +92,6 @@ function dumpAll(e) {
   e.target.innerText = "Done";
 
   setTimeout(() => {
-    // convert clearAllBtn to original state
     clearAllBtn.replaceWith(btnClone);
     btnClone.innerHTML = "Clear All";
   }, 2000);
