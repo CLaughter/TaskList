@@ -35,12 +35,13 @@ function addTask(e) {
   // Style and place x in li when generated to deletion
   const deleteX = document.createElement("span");
   const delX = "&times;";
+
   deleteX.className = "spanX";
   deleteX.style.cursor = "pointer";
   deleteX.style.color = "#b22222";
   deleteX.style.fontWeight = "bold";
-  li.appendChild(deleteX).innerHTML = delX;
 
+  li.appendChild(deleteX).innerHTML = delX;
   taskList.appendChild(li);
 
   taskInput.value = "";
@@ -74,25 +75,31 @@ function addedBtn() {
   }
 }
 
+// Remove individual task li
 function removeTask(e) {
   if (e.target.classList.contains("spanX")) {
     e.target.parentElement.remove();
   }
 }
 
+// Clear the task list
 // Change Clear All button text when clicked and revert to previous state
 function dumpAll(e) {
-  confirm("Are You Sure?");
+  let x = confirm("Are You Sure?");
+  if (x == true) {
+    while (taskList.firstChild) {
+      taskList.removeChild(taskList.firstChild);
+    }
 
-  const clearAll = document.querySelector(".taskList");
-  const clearAllBtn = document.querySelector(".btn-clear");
-  const btnClone = clearAllBtn.cloneNode();
-  // clear the task list
-  clearAll.remove();
-  e.target.innerText = "Done";
+    const clearAllBtn = document.querySelector(".btn-clear");
+    const btnClone = clearAllBtn.cloneNode();
+    e.target.innerText = "Done";
 
-  setTimeout(() => {
-    clearAllBtn.replaceWith(btnClone);
-    btnClone.innerHTML = "Clear All";
-  }, 2000);
+    setTimeout(() => {
+      clearAllBtn.replaceWith(btnClone);
+      btnClone.innerHTML = "Clear All";
+    }, 2000);
+  } else {
+    return;
+  }
 }
