@@ -13,6 +13,7 @@ const addTaskBtn = document.querySelector(".btn-add");
 const taskList = document.querySelector(".taskList");
 const taskAddedBtn = document.querySelector("span");
 const deleteList = document.querySelector(".btn-clear");
+const filter = document.querySelector("#filter");
 
 // Load all event listeners
 loadEventListeners();
@@ -21,6 +22,7 @@ function loadEventListeners() {
   addTaskBtn.addEventListener("click", addedBtn);
   taskList.addEventListener("click", removeTask);
   deleteList.addEventListener("click", dumpAll);
+  filter.addEventListener("keyup", filterTasks);
 }
 
 // Add task, style and append li with delete btn span
@@ -102,4 +104,18 @@ function dumpAll(e) {
   } else {
     return;
   }
+  window.location.reload();
+}
+
+// Filter through tasks
+function filterTasks(e) {
+  const text = e.target.value.toLowerCase();
+  document.querySelectorAll(".taskList-item").forEach((task) => {
+    const item = task.firstChild.textContent;
+    if (item.toLowerCase().indexOf(text) != -1) {
+      task.style.display = "block";
+    } else {
+      task.style.display = "none";
+    }
+  });
 }

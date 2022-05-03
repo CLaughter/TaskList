@@ -16,6 +16,7 @@ body {
   justify-content: center;
   width: 100%;
   padding: .5em;
+  padding-bottom: 0;
   font-size: 2rem;
   background-color: hsl(0, 0%, 92%);
   border: 1px solid hsl(0, 0%, 80%);
@@ -50,6 +51,7 @@ input {
   margin-top: .5rem;
   width: 100%;
   font-size: 1.25rem;
+  border-radius: 3px;
 }
 
 input:hover {
@@ -91,6 +93,14 @@ input:hover {
 .btn.btn-add:focus {
   background-color: hsl(200, 100%, 30%);
   box-shadow: 0 0 5px 0 hsl(200, 100%, 20%);
+}
+
+#filter {
+  background-color: #ccc;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  margin-bottom: 10px;
 }
 
 .task-container {
