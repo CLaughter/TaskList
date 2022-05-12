@@ -14,15 +14,50 @@ const taskList = document.querySelector(".taskList");
 const taskAddedBtn = document.querySelector("span");
 const deleteList = document.querySelector(".btn-clear");
 const filter = document.querySelector("#filter");
+const clearField = document.querySelector(".btn-clearField");
 
 // Load all event listeners
 loadEventListeners();
 function loadEventListeners() {
+  document.addEventListener("DOMContentLoaded", getTasks);
   form.addEventListener("submit", addTask);
   addTaskBtn.addEventListener("click", addedBtn);
   taskList.addEventListener("click", removeTask);
   deleteList.addEventListener("click", dumpAll);
   filter.addEventListener("keyup", filterTasks);
+  clearField.addEventListener("click", clearText);
+}
+
+// Get tasks from local storage
+function getTasks() {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.forEach(function (taskInput) {
+    const li = document.createElement("li");
+    li.className = "taskList-item";
+    li.style.display = "flex";
+    li.style.justifyContent = "space-between";
+    li.style.padding = "0 3px";
+    li.appendChild(document.createTextNode(taskInput));
+
+    // Style and place x in li when generated to deletion
+    const deleteX = document.createElement("span");
+    const delX = "&times;";
+
+    deleteX.className = "spanX";
+    deleteX.style.cursor = "pointer";
+    deleteX.style.color = "#b22222";
+    deleteX.style.fontWeight = "bold";
+    deleteX.style.paddingLeft = ".5em";
+
+    li.appendChild(deleteX).innerHTML = delX;
+    taskList.appendChild(li);
+  });
 }
 
 // Add task, style and append li with delete btn span
@@ -46,6 +81,9 @@ function addTask(e) {
   li.appendChild(deleteX).innerHTML = delX;
   taskList.appendChild(li);
 
+  // Local storage of task
+  storeTaskLS(taskInput.value);
+
   taskInput.value = "";
 
   // Alternating background colors of tasks using 2 different loops
@@ -61,6 +99,18 @@ function addTask(e) {
     liEven[i].style.background = "#ccc";
   }
   e.preventDefault();
+}
+
+// Persist local storage task
+function storeTaskLS(taskInput) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+  tasks.push(taskInput);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // Add Task Added button and hide after 2 seconds
@@ -82,6 +132,22 @@ function removeTask(e) {
   if (e.target.classList.contains("spanX")) {
     e.target.parentElement.remove();
   }
+  removeStoredTask(e.target.parentElement);
+}
+
+function removeStoredTask(taskItem) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.forEach(function (task, index) {
+    if (taskItem.textContent === task);
+    tasks.splice(index, 1);
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 // Clear the task list
@@ -91,6 +157,7 @@ function dumpAll(e) {
   if (x == true) {
     while (taskList.firstChild) {
       taskList.removeChild(taskList.firstChild);
+      removeStoredTaskList(e.target.parentElement);
     }
 
     const clearAllBtn = document.querySelector(".btn-clear");
@@ -107,10 +174,26 @@ function dumpAll(e) {
   window.location.reload();
 }
 
+function removeStoredTaskList(taskItem) {
+  let tasks;
+  if (localStorage.getItem("tasks") === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+  }
+
+  tasks.forEach(function (task, index) {
+    if (taskItem.textContent === task);
+    tasks.splice(index, 1);
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 // Filter through tasks
 function filterTasks(e) {
   const text = e.target.value.toLowerCase();
-  document.querySelectorAll(".taskList-item").forEach((task) => {
+  const taskItem = ".taskList-item";
+  document.querySelectorAll(taskItem).forEach((task) => {
     const item = task.firstChild.textContent;
     if (item.toLowerCase().indexOf(text) != -1) {
       task.style.display = "block";
@@ -118,4 +201,8 @@ function filterTasks(e) {
       task.style.display = "none";
     }
   });
+}
+
+function clearText() {
+  filter.value = filter.defaultValue;
 }

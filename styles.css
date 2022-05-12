@@ -3,8 +3,6 @@
 }
 
 body {
-  /* display: grid;
-  justify-content: center; */
   padding: 1em;
   background-color: rgb(246, 240, 240);
   color: black;
@@ -27,7 +25,10 @@ body {
 }
 
 .section-bottom {
-  border: none;
+  display: grid;
+  justify-content: center;
+  margin-top: .25em;
+  border-top: 1px solid #ccc;
 }
 
 h2,
@@ -63,6 +64,7 @@ input:hover {
   background-color: hsl(0, 0%, 95%);
   border-bottom: 1px solid hsl(0, 0%, 60%);
   cursor: pointer;
+  margin-top: .75em;
   padding: 0.5em 1em;
 }
 
@@ -82,7 +84,8 @@ input:hover {
   background-color: hsl(200 100% 40%);
 }
 
-.btn.btn-add {
+.btn.btn-add,
+.btn.btn-clearField {
   background-color: hsl(200, 100%, 40%);
   border-color: hsl(200, 100%, 20%);
   margin: 1rem;
@@ -90,7 +93,9 @@ input:hover {
 }
 
 .btn.btn-add:hover,
-.btn.btn-add:focus {
+.btn.btn-clearField:hover,
+.btn.btn-add:focus
+.btn.btn-clearField:focus {
   background-color: hsl(200, 100%, 30%);
   box-shadow: 0 0 5px 0 hsl(200, 100%, 20%);
 }
@@ -100,12 +105,17 @@ input:hover {
   font-weight: bold;
   text-align: center;
   border-radius: 3px;
-  margin-bottom: 10px;
+  margin-top: 1em;
+}
+
+#filter:hover {
+  background-color: rgb(173, 172, 172);
 }
 
 .task-container {
   display: grid;
   justify-content: center;
+  margin: 1em 0;
 }
 
 .taskList {
