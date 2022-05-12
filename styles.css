@@ -14,7 +14,7 @@ body {
 .container {
   display: grid;
   justify-content: center;
-  width: 100%;
+  width: 75%;
   padding: .5em;
   padding-bottom: 0;
   font-size: 2rem;
@@ -143,4 +143,10 @@ input:hover {
 .btn.btn-clear:focus {
   background-color: hsl(0, 0%, 60%);
   box-shadow: 0 0 5px 0 hsl(0, 0%, 50%);
+}
+
+@media (max-width: 500px) {
+.container {
+  width: 100%;
+}
 }
